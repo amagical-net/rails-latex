@@ -11,6 +11,11 @@ rails-latex is a renderer for rails 3 which allows tex files with erb to be turn
 
 == Synopsis
 
+app/helpers/application_helper.rb:
+   def lesc(text)
+     LatexToPdf.escape_latex(text)
+   end
+
 app/views/stories/show.html.erb:
    ...
    <%= link_to "print", story_path(@story,:format => :pdf) %>
