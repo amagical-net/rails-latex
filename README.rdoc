@@ -1,0 +1,52 @@
+= Rails-LaTeX
+
+* Git: http://github.com/jacott/rails-latex
+* Author: Geoff Jacobsen   
+* Copyright: 2009-2010    
+* License: MIT-LICENSE
+
+== Description
+
+rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.
+
+== Synopsis
+
+app/views/stories/show.html.erb:
+   ...
+   <%= link_to "print", story_path(@story,:format => :pdf) %>
+
+
+app/views/stories/show.pdf.erb:
+   ...   
+   <%= lesc @story.name % >
+
+app/views/layouts/application.pdf.erbtex:
+   \documentclass[12pt,a4paper,sloppy,< %= @landscape % >]{article}
+   ...
+   < %= yield % >
+   \end{document}
+
+
+config/initializers/mime_types.rb:
+   ...     
+   Mime::Type.register "application/pdf", :pdf, ['text/pdf'], ['pdf']
+
+
+Only the file containing the \\documentclass should be of type: .pdf.erbtex . Partials and views (when there is a layout)
+should be of type .pdf.erb .
+
+== Requirements
+
+* ruby 1.8 or 1.9
+* rails 3
+
+== Install
+
+* gem install rails-latex
+
+== Development
+
+Developing rails-latex requires jeweler
+
+* rake test
+* rake build
