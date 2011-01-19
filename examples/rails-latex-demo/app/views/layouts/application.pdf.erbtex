@@ -1,0 +1,8 @@
+\documentclass[12pt,a4paper,sloppy]{article}
+
+\begin{document}
+
+<%= yield %>
+
+\end{document}
+

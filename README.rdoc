@@ -40,6 +40,8 @@ config/initializers/mime_types.rb:
 Only the file containing the \\documentclass should be of type: .pdf.erbtex . Partials and views (when there is a layout)
 should be of type .pdf.erb .
 
+See the rails application under examples/rails-latex-demo/ for a working example.
+
 == Requirements
 
 * ruby 1.8 or 1.9
