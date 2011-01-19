@@ -3,13 +3,15 @@ class LatexToPdf
   #
   # pdflatex is used to convert the file and creates the directory +#{Rails.root}/tmp/rails-latex+ to store intermediate
   # files.
-  def self.generate_pdf(code)
+  def self.generate_pdf(code,parse_twice=false)
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)
     File.open(input,'wb') {|io| io.write(code) }
-    system('pdflatex','-output-directory',dir,'-interaction','batchmode',input,
-           :umask => 7,:out => :close, :err => :close, :in => :close)
+    (parse_twice ? 2 : 1).times {
+      system('pdflatex','-output-directory',dir,'-interaction','batchmode',input,
+             :umask => 7,:out => :close, :err => :close, :in => :close)
+    }
     result=File.read(input.sub(/\.tex$/,'.pdf'))
     FileUtils.rm_rf(dir)
     result

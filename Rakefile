@@ -10,7 +10,7 @@ begin
     s.email = "geoffjacobsen@gmail.com"
     s.authors = ["Geoff Jacobsen"]
     s.files =Dir.glob("{init.rb,MIT-LICENSE,{lib,test}/**/*}")
-    s.add_dependency 'rails', '>= 3.0.0.beta3'
+    s.add_dependency 'rails', '>= 3.0.0'
     s.extra_rdoc_files='{README.rdoc,MIT-LICENSE}'
     s.rdoc_options << "--main=README.rdoc"
     s

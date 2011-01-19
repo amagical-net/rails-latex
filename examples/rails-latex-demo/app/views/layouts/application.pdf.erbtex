@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper,sloppy]{article}
-
+<% @latex_parse_twice=true %>
+\usepackage{lastpage}
 \begin{document}
 
 <%= yield %>

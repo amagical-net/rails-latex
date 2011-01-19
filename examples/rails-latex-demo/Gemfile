@@ -2,4 +2,4 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 
-gem 'rails-latex'
+gem 'rails-latex', :path => '../../'
