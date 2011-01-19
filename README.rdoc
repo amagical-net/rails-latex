@@ -40,6 +40,10 @@ config/initializers/mime_types.rb:
 Only the file containing the \\documentclass should be of type: .pdf.erbtex . Partials and views (when there is a layout)
 should be of type .pdf.erb .
 
+If a LaTeX package requires two parses then add the following to the .pdf.erbtex file:
+
+   <% @latex_parse_twice=true %>
+
 See the rails application under examples/rails-latex-demo/ for a working example.
 
 == Requirements
