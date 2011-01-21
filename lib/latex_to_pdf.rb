@@ -12,8 +12,13 @@ class LatexToPdf
       system('pdflatex','-output-directory',dir,'-interaction','batchmode',input,
              :umask => 7,:out => :close, :err => :close, :in => :close)
     }
-    result=File.read(input.sub(/\.tex$/,'.pdf'))
-    FileUtils.rm_rf(dir)
+    FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
+    if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
+      result=File.read(pdf_file)
+      FileUtils.rm_rf(dir)
+    else
+      raise "pdflatex failed: See #{input.sub(/\.tex$/,'.log')} for details"
+    end
     result
   end
 
