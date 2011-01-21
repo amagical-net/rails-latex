@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Geoff Jacobsen"]
-  s.date = %q{2011-01-19}
+  s.date = %q{2011-01-21}
   s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
   s.email = %q{geoffjacobsen@gmail.com}
   s.extra_rdoc_files = [
@@ -23,7 +23,9 @@ Gem::Specification.new do |s|
     "lib/rails-latex.rb",
     "test/helper.rb",
     "test/test_doc.tex",
-    "test/test_latex_to_pdf.rb"
+    "test/test_latex_to_pdf.rb",
+    "test/tmp/out.pdf",
+    "test/tmp/rails-latex/input.log"
   ]
   s.rdoc_options = ["--main=README.rdoc"]
   s.require_paths = ["lib"]
