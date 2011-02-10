@@ -9,8 +9,8 @@ class LatexToPdf
     FileUtils.mkdir_p(dir)
     File.open(input,'wb') {|io| io.write(code) }
     (parse_twice ? 2 : 1).times {
-      system('pdflatex','-output-directory',dir,'-interaction','batchmode',input,
-             :umask => 7,:out => :close, :err => :close, :in => :close)
+      system('pdflatex','-output-directory',dir,'-interaction','batchmode',input)
+# :umask => 7,:out => :close, :err => :close, :in => :close) # not supported in ruby 1.8
     }
     FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
     if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
