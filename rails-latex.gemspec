@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Geoff Jacobsen"]
-  s.date = %q{2011-02-10}
+  s.date = %q{2011-02-16}
   s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
   s.email = %q{geoffjacobsen@gmail.com}
   s.extra_rdoc_files = [
