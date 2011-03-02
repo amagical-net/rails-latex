@@ -49,6 +49,27 @@ a archive script should be written to occasionally clean up the tmp/rails-latex 
 
 See the rails application under examples/rails-latex-demo/ for a working example.
 
+=== Generating a String
+
+If you need to generate the LaTeX document as a string you can use the +render_to_string+ method. You will probably need
+to pass the <tt>:layout => true</tt> option to invoke the PDF generator. Here is an example to generate an email attachment:
+
+In the controller you will have something along the lines of:
+
+   def send_email_method
+     output = render_to_string(:template => "/your_model/your_view.pdf.erb", :layout => true)
+     MyMailer.email_sender(current_user, output).deliver
+   end
+
+The thing to note is the :layout => true which is needed so that the pdf template can grab the application erbtex layout.
+Then in your mailer:
+
+   def email_sender(user, pdf_attachment)
+     @user = user
+     attachments["attachment_name.pdf"] = {:mime_type => 'application/pdf', :content => pdf_attachment}
+     mail( .... )  
+   end
+
 == Requirements
 
 * ruby 1.8 or 1.9
@@ -64,3 +85,7 @@ Developing rails-latex requires jeweler
 
 * rake test
 * rake build
+
+== Contributions
+
+* Tommaso Patrizi
