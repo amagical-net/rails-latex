@@ -36,7 +36,7 @@ class LatexToPdf
         class << (@latex_escaper=Object.new)
           ESCAPE_RE=/([{}_$&%#])|([\\^~|<>])/
           ESC_MAP={
-            '\\' => 'backlash',
+            '\\' => 'backslash',
             '^' => 'asciicircum',
             '~' => 'asciitilde',
             '|' => 'bar',
