@@ -1,2 +1,6 @@
 <h1>LatexExample#index</h1>
-<%= link_to "print", latex_example_path(:format => :pdf) %>
+<ul>
+  <li> <%= link_to "print", latex_example_path(:format => :pdf) %></li>
+
+  <li><%= link_to "print barcode", latex_example_barcode_path(:format => :pdf) %></li>
+</ul>

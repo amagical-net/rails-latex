@@ -42,10 +42,19 @@ should be of type .pdf.erb .
 
 If a LaTeX package requires two parses then add the following to the .pdf.erbtex file:
 
-   <% @latex_parse_twice=true %>
+   <% @latex_config={:parse_twice => true} %>
+
+You can override the defaults like so:
+
+   LatexToPdf.config.merge! :command => 'xetex', :arguments => ['-etex'], :parse_twice => true
+
+The defaults are:
+   command: 'pdflatex'
+   arguments: []
+   parse_twice: false
 
 The last log file is moved to tmp/rails-latex/input.log . If the PDF is no produced the build directory is not removed;
-a archive script should be written to occasionally clean up the tmp/rails-latex directory.
+an archive script should be written to occasionally clean up the tmp/rails-latex directory.
 
 See the rails application under examples/rails-latex-demo/ for a working example.
 

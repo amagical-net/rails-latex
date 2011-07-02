@@ -1,0 +1,42 @@
+{\begin{center} \titlefont\Huge Heading \end{center}}
+
+
+  \begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|l|c|r|}
+  \hline
+  \multicolumn{4}{|c|}{ 
+       %add some space at the top
+       \rule[1.7ex]{0pt}{2ex}
+       \titlefont\huge{Subheading}
+       %add some space at the bottom
+       \rule[-0.5ex]{0pt}{1ex}
+     } \\
+  \hline
+  Article & Title & Position & \euro \\
+  \hline
+
+  EI0049 & My-test-article & VB2 & 1.12\\
+    \hline
+
+  \multicolumn{2}{|l|}{
+    \parbox[c]{5.7cm}{
+    \vspace{1mm}
+    \begin{pspicture}(3,1in)
+      \psbarcode{PAK0002}{includetext}{code39}
+    \end{pspicture}
+    \vspace{1mm} 
+    }
+  }
+  & \textbf{Sum:} & \textbf{8.13}\\ \hline
+  \end{tabular}
+  \end{center}
+  \end{table}
+
+
+\hspace{3.57cm}
+\begin{pspicture}(3,1in)
+  \psbarcode{$PAY}{includetext}{code39}
+\end{pspicture}
+
+

@@ -1,8 +1,12 @@
 \documentclass[12pt,a4paper,sloppy]{article}
-<% @latex_parse_twice=true %>
+<% @latex_config={:command => 'pdflatex',:parse_twice => true} # you can override the defaults if you wish; see LatexToPdf#config %>
 \usepackage{lastpage}
 \usepackage{graphics}
 \begin{document}
+
+This document uses \verb|parse_twice| to calculate the last page.
+
+Other defaults can be overridden using \verb|LatexToPdf#config| and \verb|@latex_config|.
 
 <%= yield %>
 

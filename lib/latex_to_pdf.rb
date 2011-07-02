@@ -1,17 +1,37 @@
 class LatexToPdf
+  def self.config
+    @config||={:command => 'pdflatex', :arguments => [], :parse_twice => false}
+  end
+
   # Converts a string of LaTeX +code+ into a binary string of PDF.
   #
   # pdflatex is used to convert the file and creates the directory +#{Rails.root}/tmp/rails-latex+ to store intermediate
   # files.
-  def self.generate_pdf(code,parse_twice=false)
+  #
+  # The config argument defaults to ERBLatex.config but can be overridden using @latex_config.
+  #
+  # The parse_twice argument is deprecated in favor of using config[:parse_twice] instead.
+  def self.generate_pdf(code,config,parse_twice=nil)
+    parse_twice=config[:parse_twice] if parse_twice.nil?
+    config=self.config.merge(config)
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)
     File.open(input,'wb') {|io| io.write(code) }
-    (parse_twice ? 2 : 1).times {
-      system('pdflatex','-output-directory',dir,'-interaction','batchmode',input)
-# :umask => 7,:out => :close, :err => :close, :in => :close) # not supported in ruby 1.8
-    }
+    Process.waitpid(fork do
+                      begin
+                        Dir.chdir dir
+                        args=[*config[:arguments],'-shell-escape','-interaction','batchmode',"input.tex"]
+                        system config[:command],'-draftmode',*args if parse_twice
+                        exec config[:command],*args
+                      rescue
+                        File.open("input.log",'a') {|io|
+                          io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
+                        }
+                      ensure
+                        Process.exit! 1
+                      end
+                    end)
     FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
     if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
       result=File.read(pdf_file)
@@ -60,5 +80,4 @@ class LatexToPdf
 
     @latex_escaper.latex_esc(text.to_s).html_safe
   end
-
 end

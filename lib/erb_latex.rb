@@ -8,7 +8,7 @@ module ActionView               # :nodoc: all
       def compile(template)
         erb = "<% __in_erb_template=true %>#{template.source}"
         out=self.class.erb_implementation.new(erb, :trim=>(self.class.erb_trim_mode == "-")).src
-        out + ";LatexToPdf.generate_pdf(@output_buffer.to_s,@latex_parse_twice)"
+        out + ";LatexToPdf.generate_pdf(@output_buffer.to_s,@latex_config||{},@latex_parse_twice)"
       end
     end
   end

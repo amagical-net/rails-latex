@@ -1,0 +1,17 @@
+\documentclass{scrartcl}
+
+\usepackage{ifplatform}
+\usepackage{eurosym}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1cm]{geometry}
+\usepackage{auto-pst-pdf}
+\usepackage{pst-barcode}
+
+
+\begin{document}
+
+<%= yield %>
+
+\end{document}
+
