@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails-latex}
-  s.version = "1.0.4"
+  s.version = "1.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Geoff Jacobsen}]
-  s.date = %q{2011-07-02}
+  s.date = %q{2011-07-03}
   s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
   s.email = %q{geoffjacobsen@gmail.com}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "test/test_latex_to_pdf.rb",
     "test/tmp/out.pdf",
     "test/tmp/rails-latex/input.log",
+    "test/tmp/tmp/rails-latex/2368-1556906997793729431/input.tex",
     "test/tmp/tmp/rails-latex/4963-4557295006018958261/input.tex",
     "test/tmp/tmp/rails-latex/4982--3721012929416963247/input.aux",
     "test/tmp/tmp/rails-latex/4982--3721012929416963247/input.log",
