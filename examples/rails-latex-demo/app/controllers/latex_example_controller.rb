@@ -3,6 +3,6 @@ class LatexExampleController < ApplicationController
   end
 
   def barcode
-    render layout: 'barcode'
+    render :layout => 'barcode'
   end
 end

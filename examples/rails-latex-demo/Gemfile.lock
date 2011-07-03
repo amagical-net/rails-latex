@@ -1,7 +1,7 @@
 PATH
   remote: ../../
   specs:
-    rails-latex (1.0.2)
+    rails-latex (1.0.4)
       rails (>= 3.0.0)
 
 GEM

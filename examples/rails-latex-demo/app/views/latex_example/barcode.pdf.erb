@@ -1,42 +1,27 @@
-{\begin{center} \titlefont\Huge Heading \end{center}}
+{\titlefont \huge Sample Barcodes}
 
+More examples \& full documentation of the pst-barcode package can be found \href{http://mirrors.ctan.org/graphics/pstricks/contrib/pst-barcode/pst-barcode-doc.pdf}{here}.
 
-  \begin{table}[h]
-  \begin{center}
-  \begin{tabular}{|l|l|c|r|}
-  \hline
-  \multicolumn{4}{|c|}{ 
-       %add some space at the top
-       \rule[1.7ex]{0pt}{2ex}
-       \titlefont\huge{Subheading}
-       %add some space at the bottom
-       \rule[-0.5ex]{0pt}{1ex}
-     } \\
-  \hline
-  Article & Title & Position & \euro \\
-  \hline
+\section*{Code-39}
 
-  EI0049 & My-test-article & VB2 & 1.12\\
-    \hline
-
-  \multicolumn{2}{|l|}{
-    \parbox[c]{5.7cm}{
-    \vspace{1mm}
-    \begin{pspicture}(3,1in)
-      \psbarcode{PAK0002}{includetext}{code39}
-    \end{pspicture}
-    \vspace{1mm} 
-    }
-  }
-  & \textbf{Sum:} & \textbf{8.13}\\ \hline
-  \end{tabular}
-  \end{center}
-  \end{table}
-
-
-\hspace{3.57cm}
 \begin{pspicture}(3,1in)
-  \psbarcode{$PAY}{includetext}{code39}
+\psbarcode{RAILS-LATEX}{includetext}{code39}
 \end{pspicture}
 
+\section*{EAN-8}
 
+\begin{pspicture}(2.5,1in)
+\psbarcode{12345678}{includetext}{ean8}
+\end{pspicture}
+
+\section*{EAN-13}
+
+\begin{pspicture}(3,1.2in)
+\psbarcode[scalex=0.8,scaley=0.8]{9781860742712}{includetext guardwhitespace}{ean13}
+\end{pspicture}
+
+\section*{ISBN}
+
+\begin{pspicture}(3,1in)
+\psbarcode{978-3-86541-114}{includetext guardwhitespace}{isbn}
+\end{pspicture}

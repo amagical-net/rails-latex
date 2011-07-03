@@ -5,10 +5,10 @@ class LatexToPdf
 
   # Converts a string of LaTeX +code+ into a binary string of PDF.
   #
-  # pdflatex is used to convert the file and creates the directory +#{Rails.root}/tmp/rails-latex+ to store intermediate
+  # pdflatex is used to convert the file and creates the directory +#{Rails.root}/tmp/rails-latex/+ to store intermediate
   # files.
   #
-  # The config argument defaults to ERBLatex.config but can be overridden using @latex_config.
+  # The config argument defaults to LatexToPdf.config but can be overridden using @latex_config.
   #
   # The parse_twice argument is deprecated in favor of using config[:parse_twice] instead.
   def self.generate_pdf(code,config,parse_twice=nil)
@@ -21,7 +21,7 @@ class LatexToPdf
     Process.waitpid(fork do
                       begin
                         Dir.chdir dir
-                        args=[*config[:arguments],'-shell-escape','-interaction','batchmode',"input.tex"]
+                        args=config[:arguments] + ['-shell-escape','-interaction','batchmode',"input.tex"]
                         system config[:command],'-draftmode',*args if parse_twice
                         exec config[:command],*args
                       rescue

@@ -98,3 +98,4 @@ Developing rails-latex requires jeweler
 == Contributions
 
 * Tommaso Patrizi
+* Klaus Reske
