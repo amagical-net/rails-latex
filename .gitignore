@@ -1,8 +1,10 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
 tmp
-pkg
 test/tmp
 rdoc
-rails-latex.gemspec
 *~
 examples/rails-latex-demo/log
 examples/rails-latex-demo/tmp

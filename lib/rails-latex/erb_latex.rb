@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'latex_to_pdf'
+require 'rails-latex/latex_to_pdf'
 require 'action_view'
 
 module ActionView               # :nodoc: all

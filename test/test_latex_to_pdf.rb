@@ -1,5 +1,5 @@
 require 'helper'
-require 'erb_latex'
+require 'rails-latex/erb_latex'
 require 'ostruct'
 
 Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__))
