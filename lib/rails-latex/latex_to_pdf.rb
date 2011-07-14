@@ -21,6 +21,8 @@ class LatexToPdf
     Process.waitpid(fork do
                       begin
                         Dir.chdir dir
+                        STDOUT.reopen("input.log","a")
+                        STDERR.reopen(STDOUT)
                         args=config[:arguments] + ['-shell-escape','-interaction','batchmode',"input.tex"]
                         system config[:command],'-draftmode',*args if parse_twice
                         exec config[:command],*args
@@ -32,8 +34,8 @@ class LatexToPdf
                         Process.exit! 1
                       end
                     end)
-    FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
     if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
+      FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
       result=File.read(pdf_file)
       FileUtils.rm_rf(dir)
     else

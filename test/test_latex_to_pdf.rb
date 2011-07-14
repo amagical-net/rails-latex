@@ -14,7 +14,9 @@ class TestLatexToPdf < Test::Unit::TestCase
 
   def test_generate_pdf
     FileUtils.mkdir_p(TMP_DIR)
-    File.open(pdf_file=File.join(TMP_DIR,'out.pdf'),'wb') do |wio|
+    pdf_file=File.join(TMP_DIR,'out.pdf')
+    File.delete(pdf_file) if File.exist?(pdf_file)
+    File.open(pdf_file,'wb') do |wio|
       wio.write(LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{}))
     end
     assert_equal "hello world\n\n1\n\n\f", `pdftotext #{pdf_file} -`
