@@ -12,8 +12,8 @@ class LatexToPdf
   #
   # The parse_twice argument is deprecated in favor of using config[:parse_twice] instead.
   def self.generate_pdf(code,config,parse_twice=nil)
-    parse_twice=config[:parse_twice] if parse_twice.nil?
     config=self.config.merge(config)
+    parse_twice=config[:parse_twice] if parse_twice.nil?
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)

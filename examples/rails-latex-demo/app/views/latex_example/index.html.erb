@@ -3,4 +3,6 @@
   <li> <%= link_to "print", latex_example_path(:format => :pdf) %></li>
 
   <li><%= link_to "print barcode", latex_example_barcode_path(:format => :pdf) %></li>
+
+  <li><%= link_to "generate barcode pdf as string", latex_example_barcode_as_string_path %> and write to <tt><%= "#{Rails.root}/tmp/a.pdf" %></tt> </li>
 </ul>
