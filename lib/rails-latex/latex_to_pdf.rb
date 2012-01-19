@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class LatexToPdf
   def self.config
     @config||={:command => 'pdflatex', :arguments => [], :parse_twice => false}
