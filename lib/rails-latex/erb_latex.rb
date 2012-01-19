@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'fileutils'
 require 'rails-latex/latex_to_pdf'
 require 'action_view'
