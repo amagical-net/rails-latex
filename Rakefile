@@ -1,4 +1,4 @@
-require 'bundler/gem_tasks'
+require 'bundler/gem_tasks' rescue nil
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -9,7 +9,7 @@ end
 
 task :default => :test
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
