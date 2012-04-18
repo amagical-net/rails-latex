@@ -18,22 +18,23 @@ class LatexToPdf
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)
     File.open(input,'wb') {|io| io.write(code) }
-    Process.waitpid(fork do
-                      begin
-                        Dir.chdir dir
-                        STDOUT.reopen("input.log","a")
-                        STDERR.reopen(STDOUT)
-                        args=config[:arguments] + ['-shell-escape','-interaction','batchmode',"input.tex"]
-                        system config[:command],'-draftmode',*args if parse_twice
-                        exec config[:command],*args
-                      rescue
-                        File.open("input.log",'a') {|io|
-                          io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
-                        }
-                      ensure
-                        Process.exit! 1
-                      end
-                    end)
+    Process.waitpid(
+      fork do
+        begin
+          Dir.chdir dir
+          STDOUT.reopen("input.log","a")
+          STDERR.reopen(STDOUT)
+          args=config[:arguments] + %w[-shell-escape -interaction batchmode -halt-on-error input.tex]
+          system config[:command],'-draftmode',*args if parse_twice
+          exec config[:command],*args
+        rescue
+          File.open("input.log",'a') {|io|
+            io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
+          }
+        ensure
+          Process.exit! 1
+        end
+      end)
     if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
       FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
       result=File.read(pdf_file)
