@@ -7,10 +7,8 @@ class LatexExampleController < ApplicationController
   end
 
   def barcode_as_string
-
-    old_content_type = self.content_type
     @pdf=render_to_string(action: 'barcode', layout: "barcode", formats: [:pdf])
-    self.content_type = old_content_type # render_to_string changes content_type
+    self.content_type = 'text/html'
 
     File.open(file="#{Rails.root}/tmp/a.pdf",'w:binary') do |io|
       io.write(@pdf)
