@@ -1,6 +1,6 @@
 class LatexToPdf
   def self.config
-    @config||={:command => 'pdflatex', :arguments => [], :parse_twice => false}
+    @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_twice => false}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of PDF.
@@ -24,7 +24,7 @@ class LatexToPdf
           Dir.chdir dir
           STDOUT.reopen("input.log","a")
           STDERR.reopen(STDOUT)
-          args=config[:arguments] + %w[-shell-escape -interaction batchmode -halt-on-error input.tex]
+          args=config[:arguments] + %w[-shell-escape -interaction batchmode input.tex]
           system config[:command],'-draftmode',*args if parse_twice
           exec config[:command],*args
         rescue

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'helper'
 require 'rails-latex/erb_latex'
 require 'ostruct'
@@ -5,7 +6,13 @@ require 'ostruct'
 Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__))
 
 class TestLatexToPdf < Test::Unit::TestCase
+  def setup
+    super
+    FileUtils.rm_rf("#{TMP_DIR}/tmp/rails-latex")
+  end
+
   def teardown
+    super
     LatexToPdf.instance_eval { @config=nil }
   end
 
@@ -24,6 +31,22 @@ class TestLatexToPdf < Test::Unit::TestCase
     LatexToPdf.instance_eval{@latex_escaper=nil}
     require 'redcloth'
     assert_equal "dsf \\textless{} \\textgreater{} \\& ! @ \\# \\$ \\% \\^{} \\~{} \\textbackslash{} fds", LatexToPdf.escape_latex('dsf < > & ! @ # $ % ^ ~ \\ fds')
+  end
+
+  def test_broken_doc_halt_on_error
+    begin
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{})
+      fail "Should throw exception"
+    rescue => e
+      assert(/^pdflatex failed: See / =~ e.message)
+    end
+  end
+
+  def test_broken_doc_overriding_halt_on_error
+    pdf_file=write_pdf do
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{arguments: []})
+    end
+    assert_equal "ﬁle with error\n\n1\n\n\f", `pdftotext #{pdf_file} -`
   end
 
   def test_generate_pdf_one_parse

@@ -1,8 +1,8 @@
 = Rails-LaTeX
 
 * Git: http://github.com/jacott/rails-latex
-* Author: Geoff Jacobsen   
-* Copyright: 2009-2010    
+* Author: Geoff Jacobsen
+* Copyright: 2009-2010
 * License: MIT-LICENSE
 
 == Description
@@ -22,7 +22,7 @@ app/views/stories/show.html.erb:
 
 
 app/views/stories/show.pdf.erb:
-   ...   
+   ...
    <%= lesc @story.name % >
 
 app/views/layouts/application.pdf.erbtex:
@@ -33,7 +33,7 @@ app/views/layouts/application.pdf.erbtex:
 
 
 config/initializers/mime_types.rb:
-   ...     
+   ...
    Mime::Type.register "application/pdf", :pdf, ['text/pdf'], ['pdf']
 
 
@@ -48,12 +48,16 @@ You can override the defaults like so:
 
    LatexToPdf.config.merge! :command => 'xetex', :arguments => ['-etex'], :parse_twice => true
 
+or to change just the arguments:
+
+   LatexToPdf.config[:arguments].delete('-halt-on-error')
+
 The defaults are:
    command: 'pdflatex'
-   arguments: []
+   arguments: ['-halt-on-error']
    parse_twice: false
 
-The last log file is moved to tmp/rails-latex/input.log . If the PDF is no produced the build directory is not removed;
+The last log file is moved to tmp/rails-latex/input.log . If the PDF is not produced the build directory is not removed;
 an archive script should be written to occasionally clean up the tmp/rails-latex directory.
 
 See the rails application under examples/rails-latex-demo/ for a working example.
@@ -76,7 +80,7 @@ Then in your mailer:
    def email_sender(user, pdf_attachment)
      @user = user
      attachments["attachment_name.pdf"] = {:mime_type => 'application/pdf', :content => pdf_attachment}
-     mail( .... )  
+     mail( .... )
    end
 
 == Requirements
