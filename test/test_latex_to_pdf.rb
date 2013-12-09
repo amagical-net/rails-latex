@@ -46,7 +46,7 @@ class TestLatexToPdf < Test::Unit::TestCase
     pdf_file=write_pdf do
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{arguments: []})
     end
-    assert_equal "ﬁle with error\n\n1\n\n\f", `pdftotext #{pdf_file} -`
+    assert_equal "file with error\n\n1\n\n\f", `pdftotext #{pdf_file} -`
   end
 
   def test_generate_pdf_one_parse
@@ -66,6 +66,14 @@ class TestLatexToPdf < Test::Unit::TestCase
     assert_equal "The last page is 1.\n\n1\n\n\f", `pdftotext #{pdf_file} -`
 
     assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*"]
+  end
+
+  def test_doc_log_written
+    begin
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
+      assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*"]
+      assert( File.read("#{TMP_DIR}/tmp/rails-latex/input.log") =~ /entering extended mode/ )
+    end
   end
 
 end

@@ -27,8 +27,8 @@ class LatexToPdf
       fork do
         begin
           Dir.chdir dir
-          STDOUT.reopen("input.log","a")
-          STDERR.reopen(STDOUT)
+          original_stdout, original_stderr = $stdout, $stderr
+          $stderr = $stdout = File.open("input.log","a")
           args=config[:arguments] + %w[-shell-escape -interaction batchmode input.tex]
           system config[:command],'-draftmode',*args if parse_twice
           exec config[:command],*args
@@ -37,6 +37,7 @@ class LatexToPdf
             io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
           }
         ensure
+          $stdout, $stderr = original_stdout, original_stderr
           Process.exit! 1
         end
       end)
