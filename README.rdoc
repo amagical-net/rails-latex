@@ -94,7 +94,7 @@ Then in your mailer:
 
 == Development
 
-Developing rails-latex requires jeweler
+Developing rails-latex requires bundler and RedCloth
 
 * rake test
 * rake build
