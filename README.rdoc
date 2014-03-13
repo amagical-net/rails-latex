@@ -40,13 +40,13 @@ config/initializers/mime_types.rb:
 Only the file containing the \\documentclass should be of type: .pdf.erbtex . Partials and views (when there is a layout)
 should be of type .pdf.erb .
 
-If a LaTeX package requires two parses then add the following to the .pdf.erbtex file:
+If a LaTeX package requires more than one parser run add the following to the .pdf.erbtex file:
 
-   <% @latex_config={:parse_twice => true} %>
+   <% @latex_config={:parse_runs => 3} %>
 
 You can override the defaults like so:
 
-   LatexToPdf.config.merge! :command => 'xetex', :arguments => ['-etex'], :parse_twice => true
+   LatexToPdf.config.merge! :command => 'xetex', :arguments => ['-etex'], :parse_runs => 2
 
 or to change just the arguments:
 
@@ -55,7 +55,7 @@ or to change just the arguments:
 The defaults are:
    command: 'pdflatex'
    arguments: ['-halt-on-error']
-   parse_twice: false
+   parse_runs: 1
 
 The last log file is moved to tmp/rails-latex/input.log . If the PDF is not produced the build directory is not removed;
 an archive script should be written to occasionally clean up the tmp/rails-latex directory.
