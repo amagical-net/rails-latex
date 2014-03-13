@@ -68,6 +68,16 @@ class TestLatexToPdf < Test::Unit::TestCase
     assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*"]
   end
 
+  def test_generate_pdf_parse_runs
+    pdf_file=write_pdf do
+      LatexToPdf.config[:parse_runs]=2
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
+    end
+    assert_equal "The last page is 1.\n\n1\n\n\f", `pdftotext #{pdf_file} -`
+
+    assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*"]
+  end
+
   def test_doc_log_written
     begin
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
