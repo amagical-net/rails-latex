@@ -1,6 +1,6 @@
 class LatexToPdf
   def self.config
-    @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_twice => false}
+    @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_twice => false, :parse_runs => 1}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of PDF.
@@ -10,10 +10,12 @@ class LatexToPdf
   #
   # The config argument defaults to LatexToPdf.config but can be overridden using @latex_config.
   #
-  # The parse_twice argument is deprecated in favor of using config[:parse_twice] instead.
+  # The parse_twice argument and using config[:parse_twice] is deprecated in favor of using config[:parse_runs] instead.
   def self.generate_pdf(code,config,parse_twice=nil)
     config=self.config.merge(config)
-    parse_twice=config[:parse_twice] if parse_twice.nil?
+    parse_twice=config[:parse_twice] if parse_twice.nil? # deprecated
+    parse_runs=[config[:parse_runs], (parse_twice ? 2 : config[:parse_runs])].max
+    puts "Running Latex #{parse_runs} times..."
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)
@@ -30,7 +32,9 @@ class LatexToPdf
           original_stdout, original_stderr = $stdout, $stderr
           $stderr = $stdout = File.open("input.log","a")
           args=config[:arguments] + %w[-shell-escape -interaction batchmode input.tex]
-          system config[:command],'-draftmode',*args if parse_twice
+          (parse_runs-1).times do
+            system config[:command],'-draftmode',*args
+          end
           exec config[:command],*args
         rescue
           File.open("input.log",'a') {|io|
