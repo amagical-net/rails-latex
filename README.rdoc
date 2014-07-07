@@ -57,8 +57,10 @@ The defaults are:
    arguments: ['-halt-on-error']
    parse_twice: false
 
-The last log file is moved to tmp/rails-latex/input.log . If the PDF is not produced the build directory is not removed;
-an archive script should be written to occasionally clean up the tmp/rails-latex directory.
+The last log file is moved to tmp/rails-latex/input.log , and the corresponding
+source TeX file to tmp/rails-latex/input.tex . If the PDF is not produced the
+build directory is not removed; an archive script should be written to
+occasionally clean up the tmp/rails-latex directory.
 
 See the rails application under examples/rails-latex-demo/ for a working example.
 
