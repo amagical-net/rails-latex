@@ -19,8 +19,8 @@ class LatexToPdf
     FileUtils.mkdir_p(dir)
     # copy any additional supporting files (.cls, .sty, ...)
     supporting = config[:supporting]
-    if supporting.class == String or supporting.class == Array and supporting.length > 0
-      FileUtils.cp(supporting, dir)
+    if supporting.kind_of?(String) or supporting.kind_of?(Pathname) or (supporting.kind_of?(Array) and supporting.length > 0)
+      FileUtils.cp_r(supporting, dir)
     end
     File.open(input,'wb') {|io| io.write(code) }
     Process.waitpid(
