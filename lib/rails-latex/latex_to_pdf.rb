@@ -46,6 +46,7 @@ class LatexToPdf
         end
       end)
     if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
+      FileUtils.mv(input,File.join(dir,'..','input.tex'))
       FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
       result=File.read(pdf_file)
       FileUtils.rm_rf(dir)
