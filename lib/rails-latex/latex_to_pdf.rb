@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class LatexToPdf
   def self.config
     @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_twice => false, :parse_runs => 1}
