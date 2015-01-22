@@ -5,11 +5,12 @@ require "rails-latex/version"
 Gem::Specification.new do |s|
   s.name        = "rails-latex"
   s.version     = Rails::Latex::VERSION
-  s.authors     = ["Geoff Jacobsen"]
-  s.email       = ["geoffjacobsen@gmail.com"]
-  s.homepage    = "http://github.com/jacott/rails-latex"
+  s.authors     = ["Jan Baier", "Geoff Jacobsen"]
+  s.email       = ["jan.baier@amagical.net"]
+  s.homepage    = "http://github.com/baierjan/rails-latex"
   s.summary     = %q{A LaTeX to pdf rails 3 renderer.}
   s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
+  s.licence     = "MIT"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

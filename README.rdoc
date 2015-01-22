@@ -1,7 +1,7 @@
 = Rails-LaTeX
 
-* Git: http://github.com/jacott/rails-latex
-* Author: Geoff Jacobsen
+* Git: http://github.com/baierjan/rails-latex
+* Original author: Geoff Jacobsen
 * Copyright: 2009-2010
 * License: MIT-LICENSE
 
@@ -103,5 +103,6 @@ Developing rails-latex requires bundler and RedCloth
 
 == Contributions
 
+* Geoff Jacobsen
 * Tommaso Patrizi
 * Klaus Reske
