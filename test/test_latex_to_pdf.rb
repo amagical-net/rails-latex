@@ -2,6 +2,7 @@
 require 'helper'
 require 'rails-latex/erb_latex'
 require 'ostruct'
+require 'pathname'
 
 Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__))
 
