@@ -1,6 +1,6 @@
 = Rails-LaTeX
 
-* Git: http://github.com/baierjan/rails-latex
+* Git: https://github.com/baierjan/rails-latex
 * Original author: Geoff Jacobsen
 * Copyright: 2009-2010
 * License: MIT-LICENSE

@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Rails::Latex::VERSION
   s.authors     = ["Jan Baier", "Geoff Jacobsen"]
   s.email       = ["jan.baier@amagical.net"]
-  s.homepage    = "http://github.com/baierjan/rails-latex"
+  s.homepage    = "https://github.com/baierjan/rails-latex"
   s.summary     = %q{A LaTeX to pdf rails 3 renderer.}
   s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
   #s.licence     = "MIT"
