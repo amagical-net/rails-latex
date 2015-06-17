@@ -2,7 +2,7 @@
 
 * Git: https://github.com/baierjan/rails-latex
 * Original author: Geoff Jacobsen
-* Copyright: 2009-2010
+* Copyright: 2010-2015 Geoff Jacobsen, Jan Baier and contributors
 * License: MIT-LICENSE
 
 == Description
