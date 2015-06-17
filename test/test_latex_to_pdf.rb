@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-require 'helper'
 require 'rails-latex/erb_latex'
 require 'ostruct'
 require 'pathname'
 
 Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__))
 
-class TestLatexToPdf < Test::Unit::TestCase
+class TestLatexToPdf < Minitest::Test
   def setup
     super
     FileUtils.rm_rf("#{TMP_DIR}/tmp/rails-latex")
