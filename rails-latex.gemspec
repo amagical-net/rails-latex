@@ -1,29 +1,28 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "rails-latex/version"
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'rails-latex/version'
 
-Gem::Specification.new do |s|
-  s.name        = "rails-latex"
-  s.version     = Rails::Latex::VERSION
-  s.authors     = ["Jan Baier", "Geoff Jacobsen"]
-  s.email       = ["jan.baier@amagical.net"]
-  s.homepage    = "https://github.com/baierjan/rails-latex"
-  s.summary     = %q{A LaTeX to pdf rails 3 renderer.}
-  s.description = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
-  #s.licence     = "MIT"
+Gem::Specification.new do |spec|
+  spec.name          = "rails-latex"
+  spec.version       = Rails::Latex::VERSION
+  spec.authors       = ["Jan Baier", "Geoff Jacobsen"]
+  spec.email         = ["jan.baier@amagical.net"]
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  spec.summary       = %q{A LaTeX to PDF rails renderer.}
+  spec.description   = %q{rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.}
+  spec.homepage      = "https://github.com/amagical.net/rails-latex"
+  spec.license       = "MIT"
 
-  s.rdoc_options = [%q{--main=README.rdoc}]
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
 
-  s.extra_rdoc_files = [
-    "MIT-LICENSE",
-    "README.rdoc"
-  ]
-
-  s.add_dependency(%q<rails>, [">= 3.0.0"])
-  s.add_development_dependency(%q<RedCloth>, [">= 4.2.7"])
-  s.add_development_dependency "minitest-reporters", "~> 1.1"
+  spec.add_dependency "rails", "~> 3.0"
+  spec.add_development_dependency "RedCloth", "~> 4.2"
+  spec.add_development_dependency "bundler", "~> 1.12"
+  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency "minitest-reporters", "~> 1.1"
 end
