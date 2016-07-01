@@ -33,6 +33,12 @@ class LatexToPdf
           original_stdout, original_stderr = $stdout, $stderr
           $stderr = $stdout = File.open("input.log","a")
           args=config[:arguments] + %w[-shell-escape -interaction batchmode input.tex]
+            
+          system 'latex input.tex'
+          system 'bibtex input'
+          system 'latex input.tex'
+          system 'latex input.tex'
+          
           (parse_runs-1).times do
             system config[:command],'-draftmode',*args
           end
