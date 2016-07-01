@@ -5,7 +5,7 @@ require 'rails-latex/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rails-latex"
-  spec.version       = Rails::Latex::VERSION
+  spec.version       = RailsLatex::VERSION
   spec.authors       = ["Jan Baier", "Geoff Jacobsen"]
   spec.email         = ["jan.baier@amagical.net"]
 

@@ -1,5 +1,3 @@
-module Rails
-  module Latex
-    VERSION = "1.0.14"
-  end
+module RailsLatex
+  VERSION = "1.0.14"
 end
