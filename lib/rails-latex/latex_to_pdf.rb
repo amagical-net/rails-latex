@@ -16,7 +16,7 @@ class LatexToPdf
     config=self.config.merge(config)
     parse_twice=config[:parse_twice] if parse_twice.nil? # deprecated
     parse_runs=[config[:parse_runs], (parse_twice ? 2 : config[:parse_runs])].max
-    # puts "Running Latex #{parse_runs} times..."
+    Rails.logger.info "Running Latex #{parse_runs} times..."
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
     FileUtils.mkdir_p(dir)
@@ -30,19 +30,17 @@ class LatexToPdf
       fork do
         begin
           Dir.chdir dir
-          # original_stdout, original_stderr = $stdout, $stderr
-          # $stderr = $stdout = File.open("input.log","a")
           args=config[:arguments] + %w[-shell-escape -interaction batchmode input.tex]
+          kwargs={:out => ["input.log","a"]}
           (parse_runs-1).times do
-            system config[:command],'-draftmode',*args, [:out,:err] => ['input.log', 'a']
+            system config[:command],'-draftmode',*args,**kwargs
           end
-          exec config[:command],*args, [:out,:err] => ['input.log', 'a']
+          exec config[:command],*args,**kwargs
         rescue
           File.open("input.log",'a') {|io|
             io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
           }
         ensure
-          # $stdout, $stderr = original_stdout, original_stderr
           Process.exit! 1
         end
       end)

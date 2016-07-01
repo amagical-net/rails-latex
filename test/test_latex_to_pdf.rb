@@ -2,8 +2,9 @@
 require 'rails-latex/erb_latex'
 require 'ostruct'
 require 'pathname'
+require 'logger'
 
-Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__))
+Rails=OpenStruct.new(:root => TMP_DIR=File.expand_path("../tmp",__FILE__), :logger => Logger.new(STDERR))
 
 class TestLatexToPdf < Minitest::Test
   def setup
