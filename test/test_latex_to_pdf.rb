@@ -59,16 +59,6 @@ class TestLatexToPdf < Minitest::Test
     assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*.log"]
   end
 
-  def test_generate_pdf_two_parse
-    pdf_file=write_pdf do
-      LatexToPdf.config[:parse_twice]=true
-      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
-    end
-    assert_equal "The last page is 1.\n\n1\n\n\f", `pdftotext #{pdf_file} -`
-
-    assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*.log"]
-  end
-
   def test_generate_pdf_parse_runs
     pdf_file=write_pdf do
       LatexToPdf.config[:parse_runs]=2

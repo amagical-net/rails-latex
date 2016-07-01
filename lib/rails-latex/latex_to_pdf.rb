@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class LatexToPdf
   def self.config
-    @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_twice => false, :parse_runs => 1}
+    @config||={:command => 'pdflatex', :arguments => ['-halt-on-error'], :parse_runs => 1}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of PDF.
@@ -10,12 +10,9 @@ class LatexToPdf
   # files.
   #
   # The config argument defaults to LatexToPdf.config but can be overridden using @latex_config.
-  #
-  # The parse_twice argument and using config[:parse_twice] is deprecated in favor of using config[:parse_runs] instead.
   def self.generate_pdf(code,config,parse_twice=nil)
     config=self.config.merge(config)
-    parse_twice=config[:parse_twice] if parse_twice.nil? # deprecated
-    parse_runs=[config[:parse_runs], (parse_twice ? 2 : config[:parse_runs])].max
+    parse_runs=config[:parse_runs]
     Rails.logger.info "Running Latex #{parse_runs} times..."
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
     input=File.join(dir,'input.tex')
