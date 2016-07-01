@@ -1,21 +1,11 @@
-require 'bundler/gem_tasks' rescue nil
+require "bundler/gem_tasks"
+require "rake/testtask"
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList['test/**/test_*.rb']
+  t.verbose = true
 end
 
 task :default => :test
-
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "Rails-LaTeX #{version}"
-  rdoc.rdoc_files.include('README.rdoc')
-  rdoc.rdoc_files.include('MIT-LICENSE')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
