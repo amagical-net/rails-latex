@@ -1,8 +1,8 @@
 PATH
   remote: ../../
   specs:
-    rails-latex (2.0.0)
-      rails (~> 3.0)
+    rails-latex (2.1.0)
+      rails (>= 3.0.0, < 5)
 
 GEM
   remote: https://rubygems.org/

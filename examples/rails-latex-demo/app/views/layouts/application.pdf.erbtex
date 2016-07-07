@@ -1,14 +1,38 @@
 \documentclass[12pt,a4paper,sloppy]{article}
-<% @latex_config={:command => 'pdflatex',:parse_runs => 2} # you can override the defaults if you wish; see LatexToPdf#config %>
+<% @latex_config = { :recipe => [
+	{:command => 'pdflatex'},
+	{:command => 'bibtex', :arguments =>[]},
+	{:command => 'pdflatex', :runs => 2}
+]} # you can override the defaults if you wish; see LatexToPdf#config
+%>
+\usepackage{filecontents}
 \usepackage{lastpage}
 \usepackage{graphics}
-\begin{document}
 
-This document uses \verb|parse_runs = 2| to calculate the last page.
+\begin{filecontents}{bibliography.bib}
+@article{example,
+  author  = {John Doe},
+  title   = {The title of the work},
+  journal = {The name of the journal},
+  year    = 1993,
+  number  = 2,
+  pages   = {201-213},
+  month   = 7,
+  note    = {An optional note},
+  volume  = 4
+}
+\end{filecontents}
+
+\begin{document}
+This document\cite{example} uses \verb|parse_runs = 2| to calculate the last page.
 
 Other defaults can be overridden using \verb|LatexToPdf#config| and \verb|@latex_config|.
 
 <%= yield %>
+
+\bibliography{bibliography}
+\bibliographystyle{plain}
+
 
 \end{document}
 

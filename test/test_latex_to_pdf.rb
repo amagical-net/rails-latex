@@ -39,7 +39,7 @@ class TestLatexToPdf < Minitest::Test
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{})
       fail "Should throw exception"
     rescue => e
-      assert(/^pdflatex failed: See / =~ e.message)
+      assert(/^rails-latex failed: See / =~ e.message)
     end
   end
 
@@ -74,6 +74,16 @@ class TestLatexToPdf < Minitest::Test
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
       assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*.log"]
       assert( File.read("#{TMP_DIR}/tmp/rails-latex/input.log") =~ /entering extended mode/ )
+    end
+  end
+
+  def test_custom_recipe
+    begin
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{:recipe => [
+        { :command => 'pdflatex', :extra_arguments => ['-draftmode'] },
+        { :command => 'bibtex', :arguments => [] },
+        { :command => 'pdflatex', :runs => 2 }
+      ]})
     end
   end
 
