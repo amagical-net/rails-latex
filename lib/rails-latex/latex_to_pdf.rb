@@ -10,7 +10,7 @@ class LatexToPdf
   # files.
   #
   # The config argument defaults to LatexToPdf.config but can be overridden using @latex_config.
-  def self.generate_pdf(code,config,parse_twice=nil)
+  def self.generate_pdf(code, config)
     config=self.config.merge(config)
     parse_runs=config[:parse_runs]
     Rails.logger.info "Running Latex #{parse_runs} times..."
