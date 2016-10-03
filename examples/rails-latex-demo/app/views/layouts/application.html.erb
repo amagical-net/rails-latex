@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RailsLatexDemo</title>
-  <%= csrf_meta_tag %>
-</head>
-<body>
+  <head>
+    <title>Rails5LatexDemo</title>
+    <%= csrf_meta_tags %>
 
-<%= yield %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+  </head>
 
-</body>
+  <body>
+    <%= yield %>
+  </body>
 </html>

@@ -1,6 +1,9 @@
 \documentclass{scrartcl}
+<% @latex_config = { :recipe => [
+	{:command => 'xelatex'},
+]} # you can override the defaults if you wish; see LatexToPdf#config
+%>
 
-\usepackage{auto-pst-pdf}
 \usepackage{pst-barcode}
 \usepackage{hyperref}
 
