@@ -66,7 +66,8 @@ class LatexToPdf
           begin
             Dir.chdir dir
             (runs - 1).times do
-              system command, *args, **kwargs
+              clean_exit = system command, *args, **kwargs
+              Process.exit! 1 unless clean_exit
             end
             exec command, *args, **kwargs
           rescue
@@ -81,7 +82,7 @@ class LatexToPdf
     end
 
     # Finish
-    if File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
+    if $?.exitstatus.zero? && File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
       FileUtils.mv(input, File.join(dir, '..', 'input.tex'))
       FileUtils.mv(input.sub(/\.tex$/,'.log'), File.join(dir, '..', 'input.log'))
       result = File.read(pdf_file)

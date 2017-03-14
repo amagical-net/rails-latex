@@ -34,7 +34,7 @@ class TestLatexToPdf < Minitest::Test
     assert_equal "dsf \\textless{} \\textgreater{} \\& ! @ \\# \\$ \\% \\^{} \\~{} \\textbackslash{} fds", LatexToPdf.escape_latex('dsf < > & ! @ # $ % ^ ~ \\ fds')
   end
 
-  def test_broken_doc_halt_on_error
+  def test_broken_doc
     begin
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{})
       fail "Should throw exception"
@@ -43,11 +43,15 @@ class TestLatexToPdf < Minitest::Test
     end
   end
 
-  def test_broken_doc_overriding_halt_on_error
-    pdf_file=write_pdf do
-      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc.tex',__FILE__)),{arguments: []})
+  def test_broken_doc_on_page_2
+    begin
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_broken_doc_on_page_2.tex',__FILE__)),{:recipe => [
+        { :command => 'xelatex', :runs => 2 }
+      ]})
+      fail "Should throw exception"
+    rescue => e
+      assert(/^rails-latex failed: See / =~ e.message)
     end
-    assert_equal "file with error\n\n1\n\n\f", `pdftotext #{pdf_file} -`
   end
 
   def test_generate_pdf_one_parse
