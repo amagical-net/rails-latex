@@ -57,7 +57,7 @@ class LatexToPdf
     recipe.each do |item|
       command = item[:command] || config[:command]
       runs = item[:runs] || config[:parse_runs]
-      args = item[:arguments] || config[:arguments]
+      args = item[:arguments] || config[:arguments] + config[:default_arguments]
       args += item[:extra_arguments].to_a + ['input']
       kwargs = {:out => ["input.log", "a"]}
       Rails.logger.info "Running #{command} #{args.join(' ')} #{runs} times..."
