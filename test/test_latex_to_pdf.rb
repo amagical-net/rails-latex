@@ -41,6 +41,7 @@ class TestLatexToPdf < Minitest::Test
       fail "Should throw exception"
     rescue => e
       assert(/^rails-latex failed: See / =~ e.message)
+      assert(/! Undefined control sequence./ =~ e.log)
     end
   end
 
@@ -52,6 +53,7 @@ class TestLatexToPdf < Minitest::Test
       fail "Should throw exception"
     rescue => e
       assert(/^rails-latex failed: See / =~ e.message)
+      assert(/! Argument of \\hyper@n@rmalise has an extra }\./ =~ e.log)
     end
   end
 
