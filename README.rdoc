@@ -7,7 +7,7 @@
 
 == Description
 
-rails-latex is a renderer for rails 3 which allows tex files with erb to be turned into an inline pdf.
+rails-latex is a renderer for rails, which allows tex files with erb to be turned into an inline pdf.
 
 == Synopsis
 
@@ -85,10 +85,15 @@ Then in your mailer:
      mail( .... )
    end
 
+=== Exception handling and debugging
+
+When LaTeX render fails, +RailsLatex::ProcessingError+ is thrown. In your code, you can catch it and react according to your
+needs. To make your life easier, TeX source and log are attached to the exception as instance variables +src+ and +log+.
+
 == Requirements
 
 * ruby 1.8 or 1.9
-* rails 3
+* rails 3 or later
 
 == Install
 
@@ -106,3 +111,5 @@ Developing rails-latex requires bundler and RedCloth
 * Geoff Jacobsen
 * Tommaso Patrizi
 * Klaus Reske
+* Jan Baier
+* Jakub Cerny

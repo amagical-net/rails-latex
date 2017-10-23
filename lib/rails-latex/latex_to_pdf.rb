@@ -88,7 +88,11 @@ class LatexToPdf
       result = File.read(pdf_file)
       FileUtils.rm_rf(dir)
     else
-      raise "rails-latex failed: See #{input.sub(/\.tex$/,'.log')} for details"
+      raise RailsLatex::ProcessingError.new(
+        "rails-latex failed: See #{input.sub(/\.tex$/,'.log')} for details",
+        File.open(input).read,
+        File.open(input.sub(/\.tex$/,'.log')).read
+      )
     end
     result
   end
