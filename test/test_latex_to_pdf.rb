@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'rails-latex/erb_latex'
+require 'rails-latex/errors'
 require 'ostruct'
 require 'pathname'
 require 'logger'
