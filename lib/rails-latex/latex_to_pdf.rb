@@ -13,6 +13,9 @@ class LatexToPdf
       :command => 'pdflatex',
       :arguments => ['-halt-on-error'],
       :default_arguments => ['-shell-escape', '-interaction=batchmode'],
+      workdir: ->() { "#{Process.pid}-#{Thread.current.hash}" },
+      preservework: false,
+      basedir: File.join(Rails.root, 'tmp', 'rails-latex'),
       :parse_runs => 1
     }
   end
@@ -44,7 +47,7 @@ class LatexToPdf
     end
 
     # Create directory, prepare additional supporting files (.cls, .sty, ...)
-    dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
+    dir = File.join(config[:basedir], config[:workdir].call)
     input = File.join(dir, 'input.tex')
     FileUtils.mkdir_p(dir)
     supporting = config[:supporting]
@@ -60,7 +63,7 @@ class LatexToPdf
       args = item[:arguments] || config[:arguments] + config[:default_arguments]
       args += item[:extra_arguments].to_a + ['input']
       kwargs = {:out => ["input.log", "a"]}
-      Rails.logger.info "Running #{command} #{args.join(' ')} #{runs} times..."
+      Rails.logger.info "Running '#{command} #{args.join(' ')}' in #{dir} #{runs} times..."
       Process.waitpid(
         fork do
           begin
@@ -83,10 +86,12 @@ class LatexToPdf
 
     # Finish
     if $?.exitstatus.zero? && File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
-      FileUtils.mv(input, File.join(dir, '..', 'input.tex'))
-      FileUtils.mv(input.sub(/\.tex$/,'.log'), File.join(dir, '..', 'input.log'))
+      cmd = config[:preservework] ? :cp : :mv
+      FileUtils.send(cmd, input, File.join(config[:basedir], 'input.tex'))
+      FileUtils.send(cmd, input.sub(/\.tex$/,'.log'),
+                     File.join(config[:basedir], 'input.log'))
       result = File.read(pdf_file)
-      FileUtils.rm_rf(dir)
+      FileUtils.rm_rf(dir) unless config[:preservework]
     else
       raise RailsLatex::ProcessingError.new(
         "rails-latex failed: See #{input.sub(/\.tex$/,'.log')} for details",
