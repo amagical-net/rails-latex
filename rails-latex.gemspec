@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A LaTeX to PDF rails renderer.}
   spec.description   = %q{rails-latex is a renderer for rails which allows tex files with erb to be turned into an inline pdf.}
-  spec.homepage      = "https://github.com/amagical.net/rails-latex"
+  spec.homepage      = "https://github.com/amagical-net/rails-latex"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
