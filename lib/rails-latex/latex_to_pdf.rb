@@ -138,6 +138,6 @@ class LatexToPdf
       # :startdoc:
     end
 
-    @latex_escaper.latex_esc(text.to_s).html_safe
+    @latex_escaper.latex_esc(text.to_s.to_str).html_safe
   end
 end
