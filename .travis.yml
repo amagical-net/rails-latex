@@ -1,0 +1,8 @@
+os: linux
+dist: xenial
+language: ruby
+rvm:
+  - 2.3
+  - 2.5
+before_install:
+  - sudo apt-get install -qy texlive texlive-xetex poppler-utils
