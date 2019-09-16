@@ -3,12 +3,26 @@ os: linux
 dist: xenial
 
 rvm:
-  - 2.3.3
-  - 2.5.1
-  - 2.5
-  - 2.6
+- 2.3.3
+- 2.5.1
+- 2.5
+- 2.6
 
 before_install:
-  - sudo apt-get install -qy texlive texlive-xetex poppler-utils
-  - gem update --system
-  - gem install bundler
+- sudo apt-get install -qy texlive texlive-xetex poppler-utils
+- gem update --system
+- gem install bundler
+
+branches:
+  only:
+  - master
+
+deploy:
+  provider: rubygems
+  api_key:
+    secure: hSxa7c5sTrIuB2rGmBxy6JbmQPFVGVsy+ObBQFTpR1IJJK1J8icINhgN20BdXOzpPA7ji6bUSPB+a1okRcwfLZj2RffN+A1PBHT7cPfZ4JaaPnj/mR0BW0USEtIyReGiiueP1SA+7RXLJ3eM1I1trwSDhmE3z2CHpK2LcnaAPlxJNlR+rYsLPRXZG+Y+I1AZnxNnb+CqkoHMOLXDYxlEqqpRRcuUQKcisr44Ol/k2znK7xhDBbNVerRTzOXaG4/I7+FHr9dbCEEYouC+sSzhMwguBu6Kq7/pDSzjZZU+XXMjpxtPhhax3WoW4lwVP4pWUvCkt7QEEAdMlsbzZgHjO9WoevjgcWB0PSpu/+1Lz9l7oOLWFHQeoQG+t5BZhJ8FTkwPKA+N1pKh/OSx73YpEsSbLqSJ7vIaz7aPSnL79U5o0eQgz8FkbRY/OE1MBSSRh4ZhjxU4Sx7NJs8O6Bz+MB7VkayX44d0U3N8LE4Cw1p/40zP6wa4AUoDy2j6AWOS1RY+5La+ibcidsdDSf2INgrZJbA9dIXcrl3q76J2vdSCQiZJxYxEZhTDzrgQBpqASx43qsw75GPPlobguyMl7jDYOUYVn+vDov+Ff9XGufPyrpuVLWjpXwHnhIfvLQklr3+Bh1baY54sD9if2AuxzvLVhARQrGognaFwjoRq3OU=
+  gem: 'yes'
+  on:
+    tags: true
+    repo: amagical-net/rails-latex
+    branch: master
