@@ -107,7 +107,7 @@ class LatexToPdf
   # This method will use RedCloth to do the escaping if available.
   def self.escape_latex(text)
     # :stopdoc:
-    unless @latex_escaper
+    unless instance_variable_defined?(:@latex_escaper) && @latex_escaper
       if defined?(RedCloth::Formatters::LATEX)
         class << (@latex_escaper=RedCloth.new(''))
           include RedCloth::Formatters::LATEX
