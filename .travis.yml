@@ -1,8 +1,14 @@
+language: ruby
 os: linux
 dist: xenial
-language: ruby
+
 rvm:
-  - 2.3
+  - 2.3.3
+  - 2.5.1
   - 2.5
+  - 2.6
+
 before_install:
   - sudo apt-get install -qy texlive texlive-xetex poppler-utils
+  - gem update --system
+  - gem install bundler
