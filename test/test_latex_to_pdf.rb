@@ -59,7 +59,7 @@ class TestLatexToPdf < Minitest::Test
     pdf_file=write_pdf do
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
     end
-    assert_equal "The last page is ??.\n\n1\n\n\f", `pdftotext #{pdf_file} -`
+    assert_match /The last page is \?\?\.\s*1\s*\f/, `pdftotext #{pdf_file} -`
 
     assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*.log"]
   end
@@ -69,7 +69,7 @@ class TestLatexToPdf < Minitest::Test
       LatexToPdf.config[:parse_runs]=2
       LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)),{})
     end
-    assert_equal "The last page is 1.\n\n1\n\n\f", `pdftotext #{pdf_file} -`
+    assert_match /The last page is 1\.\s*1\s*\f/, `pdftotext #{pdf_file} -`
 
     assert_equal ["#{TMP_DIR}/tmp/rails-latex/input.log"], Dir["#{TMP_DIR}/tmp/rails-latex/*.log"]
   end
