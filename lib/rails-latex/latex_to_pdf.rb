@@ -49,54 +49,51 @@ class LatexToPdf
     # Create directory, prepare additional supporting files (.cls, .sty, ...)
     dir = File.join(config[:basedir], config[:workdir].call)
     input = File.join(dir, 'input.tex')
+    log   = File.join(dir, 'input.log')
     FileUtils.mkdir_p(dir)
     supporting = config[:supporting]
     if supporting.kind_of?(String) or supporting.kind_of?(Pathname) or (supporting.kind_of?(Array) and supporting.length > 0)
       FileUtils.cp_r(supporting, dir)
     end
-    File.open(input,'wb') {|io| io.write(code)}
+    File.open(input,'wb') {|f| f.write(code)}
 
     # Process recipe
     recipe.each do |item|
-      command = item[:command] || config[:command]
       runs = item[:runs] || config[:parse_runs]
-      args = item[:arguments] || config[:arguments] + config[:default_arguments]
-      args += item[:extra_arguments].to_a + ['input']
-      kwargs = {:out => ["input.log", "a"]}
-      Rails.logger.info "Running '#{command} #{args.join(' ')}' in #{dir} #{runs} times..."
-      Process.waitpid(
-        fork do
-          begin
-            Dir.chdir dir
-            (runs - 1).times do
-              clean_exit = system command, *args, **kwargs
-              Process.exit! 1 unless clean_exit
-            end
-            exec command, *args, **kwargs
-          rescue
-            File.open("input.log", 'a'){|io|
-              io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
-            }
-          ensure
-            Process.exit! 1
+      command =  [item[:command] || config[:command]]
+      command += item[:arguments] || config[:arguments] + config[:default_arguments]
+      command += item[:extra_arguments].to_a + ['input']
+
+      Rails.logger.info "Running '#{command.join(' ')}' in #{dir} #{runs} times..."
+
+      (runs - 1).times do
+        io = IO.popen(command, chdir: dir, err: [:child, :out])
+        output = io.read
+        io.close
+
+        unless $?.exitstatus.zero?
+          File.open(log, "a") do |f|
+            f.write("#{command} failed with exit status #{$?.exitstatus}: #{output}")
           end
+
+          break
         end
-      )
+      end
+
     end
 
     # Finish
     if $?.exitstatus.zero? && File.exist?(pdf_file=input.sub(/\.tex$/,'.pdf'))
       cmd = config[:preservework] ? :cp : :mv
       FileUtils.send(cmd, input, File.join(config[:basedir], 'input.tex'))
-      FileUtils.send(cmd, input.sub(/\.tex$/,'.log'),
-                     File.join(config[:basedir], 'input.log'))
+      FileUtils.send(cmd, log, File.join(config[:basedir], 'input.log'))
       result = File.read(pdf_file)
       FileUtils.rm_rf(dir) unless config[:preservework]
     else
       raise RailsLatex::ProcessingError.new(
-        "rails-latex failed: See #{input.sub(/\.tex$/,'.log')} for details",
+        "rails-latex failed: See #{log} for details",
         File.open(input).read,
-        File.open(input.sub(/\.tex$/,'.log')).read
+        File.open(log).read
       )
     end
     result
