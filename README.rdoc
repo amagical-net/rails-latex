@@ -96,6 +96,7 @@ needs. To make your life easier, TeX source and log are attached to the exceptio
 
 * ruby 1.8 or 1.9
 * rails 3 or later
+* TeX, LaTeX or XeTeX depending on your settings (the default is using `pdflatex`)
 
 == Install
 
