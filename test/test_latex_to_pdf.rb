@@ -92,4 +92,10 @@ class TestLatexToPdf < Minitest::Test
     end
   end
 
+  def test_preserve_nothing
+    begin
+      LatexToPdf.generate_pdf(IO.read(File.expand_path('../test_doc.tex',__FILE__)), :preservenothing => true)
+      assert(!File.exist?("#{TMP_DIR}/tmp/rails-latex"))
+    end
+  end
 end
